@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Typing Instructions</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+margin-top:40px;
+}
+
+#box{
+width:600px;
+margin:auto;
+border:2px solid #444;
+padding:20px;
+background:#f5f5f5;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+margin-top:20px;
+}
+
+.agree{
+margin-top:20px;
+text-align:left;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="box">
+
+<h2>Typing Test Instructions</h2>
+
+<ul style="text-align:left">
+
+<li>First English typing test will start. Time Duration of each test will be 10 Minutes</li>
+<li>Passing Criteria will be 30WPM and Accuracy 95%</li>
+<li>Type carefully and avoid mistakes</li>
+<li>Timer will auto submit the test</li>
+<li>Do not refresh or leave the page</li>
+
+</ul>
+
+<form method="POST" onsubmit="return checkAgree()">
+
+<div class="agree">
+<input type="checkbox" id="agree">
+I have read all instructions and I am ready to start typing test
+</div>
+
+<button type="submit" id="startBtn" disabled>Start English Test</button>
+
+</form>
+
+</div>
+
+<script>
+
+const checkbox = document.getElementById("agree");
+const btn = document.getElementById("startBtn");
+
+let allowStart = false;
+
+// start में disable
+checkbox.disabled = true;
+btn.disabled = true;
+
+// 5 sec delay
+setTimeout(() => {
+    checkbox.disabled = false;
+    allowStart = true;
+}, 120000);
+
+// checkbox change
+checkbox.addEventListener("change", function(){
+
+    if(allowStart && this.checked){
+        btn.disabled = false;
+    }else{
+        btn.disabled = true;
+    }
+
+});
+
+// final check
+function checkAgree(){
+    if(!allowStart){
+        alert("Please wait 5 seconds before starting");
+        return false;
+    }
+
+    if(!checkbox.checked){
+        alert("Please confirm instructions");
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>

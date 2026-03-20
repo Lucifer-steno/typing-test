@@ -1,0 +1,44 @@
+<h2>Students</h2>
+
+<a href="/add_student">
+<button>Add Student</button>
+</a>
+
+<br><br>
+
+<table border="1">
+
+<tr>
+<th>Reg</th>
+<th>Name</th>
+<th>DOB</th>
+<th>Action</th>
+</tr>
+
+{% for s in students %}
+
+<tr>
+
+<td>{{s[0]}}</td>
+
+<td>{{s[1]}}</td>
+
+<td>{{s[2]}}</td>
+
+<td>
+
+<a href="/edit_student/{{s[0]}}">
+<button>Edit</button>
+</a>
+
+<a href="/delete_student/{{s[0]}}">
+<button>Delete</button>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>

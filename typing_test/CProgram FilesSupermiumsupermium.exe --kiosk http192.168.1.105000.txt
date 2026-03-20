@@ -1,0 +1,1 @@
+"C:\Program Files\Supermium\chrome.exe" --kiosk http://192.168.1.10:5000

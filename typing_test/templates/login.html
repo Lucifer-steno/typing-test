@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Candidate Login</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f2f2f2;
+}
+
+.topbar{
+background:#2f5f96;
+height:70px;
+width:100%;
+}
+
+.logo{
+text-align:center;
+margin-top:20px;
+}
+
+.logo img{
+height:110px;
+}
+
+.coaching{
+text-align:center;
+font-size:28px;
+font-weight:bold;
+margin-top:5px;
+}
+
+.loginbox{
+width:500px;
+margin:30px auto;
+background:#fff;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.loginheader{
+background:#2f5f96;
+color:white;
+text-align:center;
+padding:12px;
+font-weight:bold;
+font-size:18px;
+}
+
+.formarea{
+padding:25px;
+}
+
+label{
+display:block;
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:8px;
+margin-top:5px;
+border:1px solid #aaa;
+}
+
+.submitbtn{
+text-align:center;
+margin-top:15px;
+}
+
+button{
+padding:8px 25px;
+background:#2f5f96;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.keyboardtitle{
+text-align:center;
+color:red;
+font-weight:bold;
+margin-top:10px;
+}
+
+.keyboardbox{
+width:70%;
+margin:10px auto;
+padding:10px;
+}
+
+.keyboardbox textarea{
+width:100%;
+background:#b7ff59;
+height:80px;
+}
+
+.notes{
+text-align:center;
+font-size:14px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar"></div>
+
+<div class="logo">
+<img src="{{ url_for('static', filename='logo.png') }}">
+</div>
+
+<div class="coaching">
+SAKSHAM SHORTHAND & TYPING CLASSES
+</div>
+
+<div class="loginbox">
+
+<div class="loginheader">
+CANDIDATE LOGIN
+</div>
+
+<div class="formarea">
+
+<form method="post">
+
+<label>Registration Number</label>
+<input name="reg">
+
+<label>Password (Date of Birth)(DDMMYYYY)</label>
+<input type="password" name="dob">
+
+<div class="submitbtn">
+<button type="submit">Submit</button>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="keyboardtitle">
+Before Login, Check Your Keyboard Here
+</div>
+
+<div class="keyboardbox">
+<textarea></textarea>
+</div>
+
+<div class="notes">
+
+<p><b>Note-1:</b> Candidates are advised to check keyboard and mouse before login.</p>
+
+<p><b>Note-2:</b> If any fault is observed, ask to change the same.</p>
+
+<p><b>Note-3:</b> During the exam following keys will be disabled.</p>
+
+<p>
+Enter Key, Escape Key, All Function Keys (F1-F12), Copy-Paste,
+Windows Key, Ctrl+C, Ctrl+V, Alt+F4, Insert, Tab, Delete,
+Home, End, Page Up, Page Down
+</p>
+
+</div>
+
+</body>
+</html>

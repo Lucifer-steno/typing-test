@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Hindi Typing Test</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#eee;
+}
+
+.header{
+background:#2f5d8a;
+color:white;
+padding:10px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+}
+
+.student{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.student img{
+width:60px;
+border-radius:10px;
+}
+
+.timer{
+font-size:28px;
+font-weight:bold;
+}
+
+.controls{
+padding:10px;
+}
+
+.controls button{
+padding:5px 10px;
+font-size:16px;
+margin-right:5px;
+}
+
+.paragraph{
+background:#f5f5f5;
+border:1px solid #999;
+padding:10px;
+height:380px;
+overflow:auto;
+font-size:18px;
+line-height:30px;
+}
+
+.typing{
+background:#c7f25f;
+width:98.5%;
+height:180px;
+border:1px solid #999;
+font-size:18px;
+padding:10px;
+outline:none;
+}
+
+.submit{
+text-align:center;
+padding:10px;
+}
+
+.word{
+padding:2px;
+}
+
+.current{
+background:#fff3a0;
+}
+
+.wrong{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="title">Hindi Typing</div>
+
+<div class="student">
+
+<div>
+Registration No. : <b>{{session["user"]}}</b><br>
+NAME : <b>{{session["name"]}}</b>
+</div>
+
+</div>
+
+<div class="timer">
+Time Left <span id="time">{{duration}}:00</span>
+</div>
+
+</div>
+
+
+<div class="controls">
+
+<button onclick="fontPlus()">A+</button>
+<button onclick="fontNormal()">A</button>
+<button onclick="fontMinus()">A-</button>
+
+</div>
+
+
+<div id="para" class="paragraph">
+{% for w in passage.split() %}
+<span class="word">{{w}}</span>
+{% endfor %}
+</div>
+
+
+<form method="POST">
+
+<textarea name="typed" class="typing" required spellcheck="false"
+autocomplete="off"
+autocorrect="off"
+autocapitalize="off"
+onpaste="return false"
+oncopy="return false"
+oncut="return false" onpaste="return false" id="typingBox"></textarea>
+
+<div class="submit">
+<button type="submit">END TYPING TEST</button>
+</div>
+
+</form>
+
+
+<script>  
+
+let size = 18;
+
+function fontPlus(){
+size+=2;
+document.getElementById("para").style.fontSize=size+"px";
+}
+
+function fontMinus(){
+size-=2;
+document.getElementById("para").style.fontSize=size+"px";
+}
+
+function fontNormal(){
+size=18;
+document.getElementById("para").style.fontSize="18px";
+}
+
+
+let time={{duration}}*60;
+
+setInterval(function(){
+
+let min=Math.floor(time/60);
+let sec=time%60;
+
+document.getElementById("time").innerHTML=
+String(min).padStart(2,'0')+":"+String(sec).padStart(2,'0');
+
+time--;
+
+if(time<=0){
+document.forms[0].submit();
+}
+
+},1000)
+
+</script>
+
+{% if highlight == 1 %}
+
+<script>
+
+const words = document.querySelectorAll("#para .word");
+const textarea = document.getElementById("typingBox");
+
+words[0].classList.add("current");
+
+function scrollIfNeeded(word){
+    const container = document.getElementById("para");
+    const rect = word.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    if(rect.bottom > containerRect.bottom){
+        container.scrollTop += rect.bottom - containerRect.bottom + 10;
+    }
+
+    if(rect.top < containerRect.top){
+        container.scrollTop -= (containerRect.top - rect.top) + 10;
+    }
+}
+
+textarea.addEventListener("input", function(){
+
+    let value = textarea.value;
+
+    // split WITHOUT removing last empty
+    let typedWords = value.split(/\s+/);
+
+    let currentIndex = typedWords.length - 1;
+
+    // remove all current
+    words.forEach(w => w.classList.remove("current"));
+
+    // 🔴 CHECK ONLY WHEN SPACE PRESSED
+    if(value.endsWith(" ")){
+
+        let completedWords = value.trim().split(/\s+/);
+
+        let lastIndex = completedWords.length - 1;
+
+        if(words[lastIndex]){
+
+            if(completedWords[lastIndex] !== words[lastIndex].innerText){
+                words[lastIndex].classList.add("wrong");
+            }else{
+                words[lastIndex].classList.remove("wrong");
+            }
+
+        }
+
+    }
+
+    // current word highlight
+    if(words[currentIndex]){
+        words[currentIndex].classList.add("current");
+        scrollIfNeeded(words[currentIndex]);
+    }
+
+});
+
+</script>
+
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    document.getElementById("typingBox").focus();
+});
+</script>
+
+<script>
+
+document.addEventListener("keydown", function(e){
+
+    // 🔴 Function keys disable (F1–F12)
+    if(e.key.startsWith("F")){
+        e.preventDefault();
+    }
+
+    // 🔴 Ctrl shortcuts disable
+    if(e.ctrlKey){
+        e.preventDefault();
+    }
+
+    // 🔴 Tab disable
+    if(e.key === "Tab"){
+        e.preventDefault();
+    }
+
+    // 🔴 Right click disable
+    document.addEventListener("contextmenu", e => e.preventDefault());
+
+});
+
+</script>
+
+</body>
+</html>
